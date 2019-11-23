@@ -1,14 +1,13 @@
 import Tile from "./tile.js";
 
-class Checkpoint extends Tile {
+class Floor extends Tile {
 
   constructor(row, column) {
     super(row, column);
-    this.imageSrc = "./PNG/Crates/crate_30.png";
+    this.imageSrc = `./png/ground/ground.png`;
     this.player = false;
     this.box = false;
   }
-
 }
 
-export default Checkpoint;
+export default Floor;

@@ -4,7 +4,7 @@ class Wall extends Tile {
 
   constructor(row, column) {
     super(row, column);
-    this.imageSrc = "./PNG/Environment/environment_04.png";
+    this.imageSrc = "./png/environment/environment_04.png";
   }
 
 }

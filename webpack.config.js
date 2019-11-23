@@ -1,7 +1,12 @@
+const path = require("path")
+
 module.exports = {
-  entry: "./lib/sokoban.js",
-  output: {
-    filename: "./dist/bundle.js"
-  },
-  devtool: "source-map"
-};
+  devtool: "source-map",
+  entry: "./src/sokoban",
+  mode: "development",
+  devServer: {
+    contentBase: path.join(__dirname, 'src'),
+    compress: true,
+    port: 9000
+  }
+}
