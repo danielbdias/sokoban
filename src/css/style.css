@@ -65,23 +65,24 @@ canvas {
   width: 480px;
   background-color: #DDFCAD;
   border-radius: 6px;
+  height: 650px;
 }
 
 .bonus h2 {
-  padding: 20px;
-  font-size: 30px;
+  padding: 10px;
+  font-size: 20px;
 }
 
-#reset-level, #skip-level, .reset-game {
+#reset-level, #skip-level, .reset-game, #start-solver, #stop-solver {
   cursor: pointer;
   box-sizing: border-box;
-  margin: 20px 35px;
-  width: 400px;
+  margin: 10px 3px;
+  width: 150px;
   height: 70px;
   background-color: #FF8784;
   border: 2px dashed #ffffff;
   border-radius: 6px;
-  font-size: 32px;
+  font-size: 20px;
   font-weight: bold;
 }
 

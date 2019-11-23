@@ -21,7 +21,7 @@
 
     <div class="middle-container">
 
-      <div class="instructions">
+      <!-- <div class="instructions">
         <h2>Welcome!</h2>
 
         <p>Sokoban is a popular puzzle game developed by Hiroyuki
@@ -44,7 +44,7 @@
         project's code at <a href="http://www.github.com/paskhaver/sokoban" target="_blank">GitHub</a>.</p>
 
 
-      </div>
+      </div> -->
       <canvas id="canvas">
 
       </canvas>
@@ -92,11 +92,20 @@
             <option value="30">30</option>
           </select>
           of 30</h2>
-        <h2>Steps Taken: <span id="steps-taken">0</span></h2>
-        <h2>Box Pushes: <span id="box-pushes">0</span></h2>
+        <h2>Steps Taken: <span id="steps-taken">0</span> / Box Pushes: <span id="box-pushes">0</span></h2>
         <button id="reset-level">Reset Level</button>
         <button id="skip-level">Skip Level</button>
         <button class="reset-game">Reset Game</button>
+        <h2>Solvers:</h2>
+        <h2>
+          Algorithm:
+          <select>
+            <option value="naive">naive</option>
+          </select>
+        </h2>
+        <button id="start-solver">Start Solver</button>
+        <button id="stop-solver">Stop Solver</button>
+        <h2>States discovered: <span id="solver-states-discovered">0</span> / Found goal: <span id="solver-found-goal">false</span></h2>
       </div>
     </div>
 
