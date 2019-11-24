@@ -2,7 +2,7 @@ const path = require("path")
 
 module.exports = {
   devtool: "source-map",
-  entry: "./src/sokoban",
+  entry: "./src",
   mode: "development",
   devServer: {
     contentBase: path.join(__dirname, 'src'),

@@ -279,6 +279,4 @@ const LEVELS = [
   ["#", "#", "#", "#", "#", "#", "#", "#"]]
 ];
 
-console.log(LEVELS.length);
-
 export default LEVELS;
