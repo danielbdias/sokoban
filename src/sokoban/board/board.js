@@ -1,57 +1,22 @@
-import Tile from './tiles/tile.js'
-import Floor from './tiles/floor.js'
-import Wall from './tiles/wall.js'
-import Player from './tiles/player.js'
-import Box from './tiles/box.js'
-import Checkpoint from './tiles/checkpoint.js'
+import GridSerializer from './gridSerializer'
+import Checkpoint from '../tiles/checkpoint'
+import Wall from '../tiles/wall'
+
+function findPlayer(grid) {
+  const tiles = grid.reduce((list, row) => list.concat(row), [])
+  const tilesWithPlayer = tiles.filter(tile => tile.player)
+
+  return tilesWithPlayer[0].player
+}
 
 class Board {
   constructor (textGrid) {
     this.stage = new createjs.Stage('canvas')
     this.stepCount = 0
     this.boxPushes = 0
-    this.objectGrid = this.compile(textGrid)
+    this.objectGrid = GridSerializer.fromText(textGrid)
+    this.playerObject = findPlayer(this.objectGrid)
     this.render()
-  }
-
-  compile (textGrid) {
-    return textGrid.map((array, rowIndex) => {
-      return array.map((symbol, colIndex) => {
-        let floor, box, player, checkpoint
-        switch (symbol) {
-          case '#':
-            return new Wall(rowIndex, colIndex)
-
-          case ' ':
-            return new Floor(rowIndex, colIndex)
-
-          case '.':
-            return new Checkpoint(rowIndex, colIndex)
-
-          case '$':
-            floor = new Floor(rowIndex, colIndex)
-            floor.box = new Box(rowIndex, colIndex)
-            return floor
-
-          case '*':
-            checkpoint = new Checkpoint(rowIndex, colIndex)
-            checkpoint.box = new Box(rowIndex, colIndex)
-            return checkpoint
-
-          case '@':
-            floor = new Floor(rowIndex, colIndex)
-            floor.player = new Player(rowIndex, colIndex)
-            this.playerObject = floor.player
-            return floor
-
-          case '+':
-            checkpoint = new Checkpoint(rowIndex, colIndex)
-            checkpoint.player = new Player(rowIndex, colIndex)
-            this.playerObject = checkpoint.player
-            return checkpoint
-        }
-      })
-    })
   }
 
   render () {
@@ -60,13 +25,6 @@ class Board {
         tileClass.render(this.stage)
       })
     })
-  }
-
-  getPlayerInfo () {
-    const playerObject = this.playerObject
-    const row = playerObject.row
-    const column = playerObject.column
-    return { playerObject, row, column }
   }
 
   getGridObject (row, column) {
@@ -136,7 +94,9 @@ class Board {
   }
 
   handleMovement (direction) {
-    const { playerObject, row, column } = this.getPlayerInfo()
+    const playerObject = this.playerObject
+    const { row, column } = playerObject
+
     if (!this.outsideOfBox(direction, row, column)) return
     const {
       playerTile,
@@ -164,7 +124,7 @@ class Board {
   }
 
   gameOver () {
-    const flattened = _.flatten(this.objectGrid)
+    const flattened = this.objectGrid.reduce((list, row) => list.concat(row), [])
     const checkpoints = flattened.filter(object => {
       return object instanceof Checkpoint
     })

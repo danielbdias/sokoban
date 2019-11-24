@@ -1,5 +1,5 @@
-import Board from './board.js'
-import LEVELS from './levels.js'
+import Board from './board'
+import LEVELS from './levels'
 
 const FIRST_LEVEL = 1
 const LAST_LEVEL = 30
