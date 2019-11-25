@@ -1,4 +1,6 @@
 import Sokoban from "./sokoban";
+import SokobanSimulator from "./sokoban/simulator"
+import SolverFactory from "./solver/factory"
 
 const keyCodeToDirection = { 37: "left", 38: "up", 39: "right", 40: "down" }
 let sokoban = new Sokoban(refreshGameStats)
@@ -16,10 +18,18 @@ function refreshGameStats(stats) {
   $("#select-level").val(level)
 }
 
+function refreshSolverStats(stats) {
+  const { discoveredStates, stepsSimulated, goalFound } = stats
+
+  $("#solver-states-discovered").text(discoveredStates)
+  $("#solver-found-goal").text(goalFound)
+  $("#solver-steps-simulated").text(stepsSimulated)
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   $("#reset-level").click(() => sokoban.resetLevel())
   $("#skip-level").click(() => sokoban.nextLevel())
-  $(".reset-game").click(_ => sokoban.resetGame())
+  $(".reset-game").click(() => sokoban.resetGame())
 
   $("#select-level").change(() => {
     const levelAsText = $("#select-level").val()
@@ -27,7 +37,15 @@ document.addEventListener("DOMContentLoaded", () => {
     sokoban.startLevel(level)
   })
 
-  $("#start-solver").click(() => console.log(JSON.stringify(sokoban.currentState())))
+  $("#start-solver").click(() => {
+    const levelAsText = $("#select-level").val()
+    const level = parseInt(levelAsText)
+    const maxSteps = 100000
+    const solverType = $("#select-solver").val()
+    const solver = SolverFactory.create(solverType, new SokobanSimulator(sokoban, level), refreshSolverStats)
+
+    console.log(solver.solve(maxSteps))
+  })
   $("#stop-solver").click(() => {
     sokoban.restoreState({"stepCount":16,"boxPushes":3,"level":1,"board":[["#","#","#","#","#","#","#","#"],["#","#","#"," "," ","."," ","#"],["#","#"," ",".","$","#"," ","#"],["#","#"," ","*"," "," "," ","#"],["#","#"," "," ","#","@","#","#"],["#","#","#"," "," ","$","#","#"],["#","#","#","#","#","#","#","#"],["#","#","#","#","#","#","#","#"]]})
   })

@@ -78,6 +78,10 @@ class Sokoban {
 
     this.notifyState()
   }
+
+  setRenderStatus (enabled) {
+    this.board.setRenderStatus(enabled)
+  }
  }
 
 export default Sokoban

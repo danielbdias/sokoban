@@ -16,6 +16,7 @@ class Board {
     this.boxPushes = 0
     this.objectGrid = GridSerializer.fromText(textGrid)
     this.playerObject = findPlayer(this.objectGrid)
+    this.renderEnabled = true
     this.render()
   }
 
@@ -24,11 +25,17 @@ class Board {
   }
 
   render () {
+    if (!this.renderEnabled) return
+
     this.objectGrid.forEach(row => {
       row.forEach(tileClass => {
         tileClass.render(this.stage)
       })
     })
+  }
+
+  setRenderStatus (enabled) {
+    this.renderEnabled = enabled
   }
 
   getGridObject (row, column) {
