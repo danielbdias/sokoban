@@ -10,7 +10,9 @@ function fromText(textGrid) {
 }
 
 function toText(objectGrid) {
-  return objectGrid.map(array => tile => TileFactory.symbolFromTile(tile))
+  return objectGrid.map(array =>
+    array.map(tile => TileFactory.symbolFromTile(tile))
+  )
 }
 
 export default { fromText, toText }

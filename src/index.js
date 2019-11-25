@@ -27,6 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
     sokoban.startLevel(level)
   })
 
+  $("#start-solver").click(() => console.log(JSON.stringify(sokoban.currentState())))
+  $("#stop-solver").click(() => {
+    sokoban.restoreState({"stepCount":16,"boxPushes":3,"level":1,"board":[["#","#","#","#","#","#","#","#"],["#","#","#"," "," ","."," ","#"],["#","#"," ",".","$","#"," ","#"],["#","#"," ","*"," "," "," ","#"],["#","#"," "," ","#","@","#","#"],["#","#","#"," "," ","$","#","#"],["#","#","#","#","#","#","#","#"],["#","#","#","#","#","#","#","#"]]})
+  })
+
   document.addEventListener("keydown", () => {
     event.preventDefault()
 

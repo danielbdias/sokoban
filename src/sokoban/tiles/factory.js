@@ -38,14 +38,14 @@ function create(symbol, rowIndex, colIndex) {
 function symbolFromTile(tile) {
   if (tile instanceof Wall) return '#'
   if (tile instanceof Floor) {
-    if (tile.box) return '*'
-    if (tile.player) return '+'
-    return '.'
-  }
-  if (tile instanceof Checkpoint) {
     if (tile.box) return '$'
     if (tile.player) return '@'
     return ' '
+  }
+  if (tile instanceof Checkpoint) {
+    if (tile.box) return '*'
+    if (tile.player) return '+'
+    return '.'
   }
 }
 

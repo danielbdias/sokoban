@@ -23,11 +23,7 @@ class Sokoban {
     this.level = zeroIndexedLevel
 
     this.board = new Board(textGrid)
-    this.statsNotifier({
-      stepCount: this.board.stepCount,
-      boxPushes: this.board.boxPushes,
-      level: this.currentLevel()
-    })
+    this.notifyState()
   }
 
   resetLevel () {
@@ -47,18 +43,40 @@ class Sokoban {
     return this.currentLevel() === LAST_LEVEL
   }
 
-  levelCompleted() {
+  levelCompleted () {
     return this.board.gameOver()
   }
 
-  movePlayer(action) {
+  movePlayer (action) {
     this.board.movePlayer(action)
+    this.notifyState()
+  }
 
+  currentState () {
+    return {
+      stepCount: this.board.stepCount,
+      boxPushes: this.board.boxPushes,
+      level: this.currentLevel(),
+      board: this.board.boardState()
+    }
+  }
+
+  notifyState () {
     this.statsNotifier({
       stepCount: this.board.stepCount,
       boxPushes: this.board.boxPushes,
       level: this.currentLevel()
     })
+  }
+
+  restoreState (state) {
+    this.level = state.level - 1
+
+    this.board = new Board(state.board)
+    this.board.stepCount = state.stepCount
+    this.board.boxPushes = state.boxPushes
+
+    this.notifyState()
   }
  }
 

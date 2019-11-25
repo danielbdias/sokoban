@@ -19,6 +19,10 @@ class Board {
     this.render()
   }
 
+  boardState () {
+    return GridSerializer.toText(this.objectGrid)
+  }
+
   render () {
     this.objectGrid.forEach(row => {
       row.forEach(tileClass => {
@@ -125,12 +129,8 @@ class Board {
 
   gameOver () {
     const flattened = this.objectGrid.reduce((list, row) => list.concat(row), [])
-    const checkpoints = flattened.filter(object => {
-      return object instanceof Checkpoint
-    })
-    return checkpoints.every(checkpoint => {
-      return checkpoint.box
-    })
+    const checkpoints = flattened.filter(object => object instanceof Checkpoint)
+    return checkpoints.every(checkpoint => checkpoint.box)
   }
 
   movePlayer (direction) {
