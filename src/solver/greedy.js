@@ -1,4 +1,4 @@
-const maxTrials = 100
+const maxTrials = 1
 const maxDepth = 1000
 
 const INFINITY = 10000000
@@ -13,7 +13,6 @@ class GreedySolver {
     this.solveStats = solveStats
     this.valuesPerState = new Map()
     this.availableActions = this.simulator.actions()
-    this.deadEndActionsPerState = new Map()
   }
 
   solve () {
@@ -26,6 +25,7 @@ class GreedySolver {
       let visitedStates = []
       let state = this.simulator.start()
       discoveredStates.set(state.id(), state)
+      visitedStates.push(state)
 
       for (let i = 0; i < maxDepth; i++) {
         if (this.simulator.reachedGoal()) {
@@ -35,9 +35,10 @@ class GreedySolver {
 
         this.valuesPerState.set(state.id(), this.computeUpdateValue(state))
 
-        const action = this.chooseGreedyAction(state)
+        const action = this.chooseGreedyAction(state, visitedStates)
         state = this.getNextState(state, action)
         discoveredStates.set(state.id(), state)
+        visitedStates.push(state)
       }
 
       for (const visitedState of visitedStates) {
@@ -64,13 +65,13 @@ class GreedySolver {
     return cost + values.reduce((min, current) => Math.min(min, current))
   }
 
-  chooseGreedyAction(state) {
+  chooseGreedyAction(state, visitedStates) {
     const actions = this.availableActions
     let bestAction = null
     let bestValue = INFINITY
 
     for (const action of actions) {
-      const value = this.getValueForState(state, action)
+      const value = this.getValueForState(state, action, visitedStates)
 
       if (value < bestValue) {
         bestAction = action
@@ -88,35 +89,29 @@ class GreedySolver {
     return nextState
   }
 
-  getValueForState(state, action) {
+  getValueForState(state, action, visitedStates) {
     const nextState = this.getNextState(state, action)
 
-    if (state.id() === nextState.id()) {
-      this.markAsDeadendAction(state, action)
-    }
+    // if (visitedStates) {
+      if (state.id() === nextState.id()) {
+        return INFINITY
+      }
+    // }
 
     return (this.valuesPerState.get(nextState.id()) || heuristicStart)
-  }
-
-  markAsDeadendAction(state, action) {
-    const deadEndActions = this.deadEndActionsPerState.get(state.id()) || []
-    if (deadEndActions.includes(action)) return
-
-    deadEndActions.push(action)
-    this.deadEndActionsPerState.set(state.id(), deadEndActions)
   }
 
   runDiscoveredPath() {
     const stateTraverseOrder = []
     let state = this.simulator.start()
-    stateTraverseOrder.push(state)
+    stateTraverseOrder.push({ state, action: null })
 
     for (let i = 0; i < maxDepth; i++) {
       if (this.simulator.reachedGoal()) return
 
       const action = this.chooseGreedyAction(state)
       state = this.simulator.simulateAction(action)
-      stateTraverseOrder.push(state)
+      stateTraverseOrder.push({ state, action })
     }
 
     return stateTraverseOrder

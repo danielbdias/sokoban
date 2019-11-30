@@ -56,11 +56,14 @@
         <button id="reset-level">Reset Level</button>
         <button id="skip-level">Skip Level</button>
         <button class="reset-game">Reset Game</button>
-        <h2>Solvers:</h2>
-        <button id="previous-state">Start Solver</button>
-        <button id="next-state">Stop Solver</button>
-        <h2>States discovered: <span id="solver-states-discovered">0</span> / Found goal: <span id="solver-found-goal">false</span></h2>
-        <h2>Steps simulated: <span id="solver-steps-simulated">0</span></h2>
+        <h2>State track:</h2>
+        <h2>States: <span id="states-found">0</span> / Current state: <span id="current-state">0</span></h2>
+        <button id="read-states">Read States</button>
+        <button id="clear-states">Clear States</button>
+        <br/>
+        <button id="previous-state">Previous</button>
+        <button id="next-state">Next</button>
+        <h2>States: <textarea id="state-text"></textarea></h2>
       </div>
     </div>
 

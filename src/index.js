@@ -8,6 +8,9 @@ const canvas = document.getElementById('canvas')
 canvas.width = 512
 canvas.height = 512
 
+let states = []
+let currentStateIndex = 0
+
 function refreshGameStats(stats) {
   const { stepCount, boxPushes, level } = stats
 
@@ -28,6 +31,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const levelAsText = $("#select-level").val()
     const level = parseInt(levelAsText)
     sokoban.startLevel(level)
+  })
+
+  $("#clear-states").click(() => {
+    $("#state-text").val("")
+
+    states = []
+    currentStateIndex = 0
+
+    $("#states-found").text(states.length)
+    $("#current-state").text(currentStateIndex + 1)
+  })
+  $("#read-states").click(() => {
+    const stateText = $("#state-text").val()
+    states = stateText.split("\n")
+    currentStateIndex = 0
+
+    $("#states-found").text(states.length)
+    $("#current-state").text(currentStateIndex + 1)
+    sokoban.restoreState(JSON.parse(states[currentStateIndex]).state)
+  })
+  $("#previous-state").click(() => {
+    if (currentStateIndex === 0) return
+    currentStateIndex--
+    $("#current-state").text(currentStateIndex + 1)
+    sokoban.restoreState(JSON.parse(states[currentStateIndex]).state)
+  })
+  $("#next-state").click(() => {
+    if (states.length === currentStateIndex + 1) return
+    currentStateIndex++
+    $("#current-state").text(currentStateIndex + 1)
+    // sokoban.restoreState(JSON.parse(states[currentStateIndex]).state)
+    sokoban.movePlayer(JSON.parse(states[currentStateIndex]).action)
   })
 
   document.addEventListener("keydown", () => {

@@ -3,8 +3,8 @@ import SokobanSimulator from "./sokoban/simulator"
 import SolverFactory from "./solver/factory"
 
 const level = 1
-// const solverType = "greedy"
-const solverType = "naive"
+const solverType = "greedy"
+// const solverType = "naive"
 
 function refreshGameStats(stats) { /* do nothing */ }
 function refreshSolverStats(stats) { /* do nothing */ }
@@ -18,8 +18,7 @@ const { stateTraverseOrder, discoveredStates } = solver.solve()
 console.log("Solution size: ", stateTraverseOrder.length)
 console.log("Discovered states: ", discoveredStates.size)
 
-for (let i = 0; i < 10; i++) {
-  const stateId = stateTraverseOrder[i]
-  const state = discoveredStates.get(stateId)
-  console.log(JSON.stringify(state.content()))
+for (let i = 0; i < 30; i++) {
+  const { state, action } = stateTraverseOrder[i]
+  console.log(JSON.stringify({ state: state.content(), action, id: state.id() }))
 }

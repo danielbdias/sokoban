@@ -69,11 +69,11 @@ canvas {
 }
 
 .bonus h2 {
-  padding: 10px;
+  /* padding: 10px; */
   font-size: 20px;
 }
 
-#reset-level, #skip-level, .reset-game, #previous-state, #next-state {
+#reset-level, #skip-level, .reset-game, #read-states, #clear-states, #previous-state, #next-state {
   cursor: pointer;
   box-sizing: border-box;
   margin: 10px 3px;
@@ -102,31 +102,9 @@ select {
   border: 2px solid red;
 }
 
-#dialog {
-  width: 500px;
-  margin: 10px auto;
-  border-radius: 6px;
-  background-color: #ffffff;
-  text-align: center;
-}
-
-#dialog h3 {
-  padding-top: 20px;
-  font-size: 36px;
-}
-
-.no-close .ui-dialog-titlebar-close {
-  display: none;
-}
-
-footer {
-  margin: 20px auto;
-  width: 80%;
-  border-radius: 6px;
-  background-color: #FFFFCC;
-  text-align: center;
-}
-
-footer img {
-  padding: 20px 20px;
+#state-text {
+  height: 120px;
+  width: 450px;
+  /* font-size: 18px; */
+  border: 2px solid red;
 }

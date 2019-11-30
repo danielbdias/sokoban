@@ -31,7 +31,7 @@ class NaiveSolver {
 
   registerState(discoveredStates, stateTraverseOrder, state) {
     discoveredStates.set(state.id(), state)
-    stateTraverseOrder.push(state.id())
+    stateTraverseOrder.push(state)
 
     this.solveStats({
       discoveredStates: discoveredStates.size,
