@@ -1,3 +1,5 @@
+const maxSteps = 10000
+
 function chooseAction(actions) {
   const index = Math.floor(actions.length * Math.random())
   return actions[index]
@@ -9,7 +11,7 @@ class NaiveSolver {
     this.solveStats = solveStats
   }
 
-  solve (maxSteps) {
+  solve () {
     const stateTraverseOrder = []
     const discoveredStates = new Map()
 
@@ -17,14 +19,14 @@ class NaiveSolver {
     this.registerState(discoveredStates, stateTraverseOrder, state)
 
     for (let i = 0; i < maxSteps; i++) {
-      if (this.simulator.reachedGoal()) return
+      if (this.simulator.reachedGoal()) break
 
       const action = chooseAction(this.simulator.actions())
       state = this.simulator.simulateAction(action)
       this.registerState(discoveredStates, stateTraverseOrder, state)
     }
 
-    return { traversedStates, discoveredStates }
+    return { stateTraverseOrder, discoveredStates }
   }
 
   registerState(discoveredStates, stateTraverseOrder, state) {

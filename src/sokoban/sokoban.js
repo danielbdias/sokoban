@@ -5,8 +5,9 @@ const FIRST_LEVEL = 1
 const LAST_LEVEL = 30
 
 class Sokoban {
-  constructor (statsNotifier) {
+  constructor (statsNotifier, offlineMode = false) {
     this.statsNotifier = statsNotifier
+    this.offlineMode = offlineMode
     this.startLevel(FIRST_LEVEL)
   }
 
@@ -22,7 +23,7 @@ class Sokoban {
 
     this.level = zeroIndexedLevel
 
-    this.board = new Board(textGrid)
+    this.board = new Board(textGrid, !this.offlineMode)
     this.notifyState()
   }
 
@@ -72,7 +73,7 @@ class Sokoban {
   restoreState (state) {
     this.level = state.level - 1
 
-    this.board = new Board(state.board)
+    this.board = new Board(state.board, !this.offlineMode)
     this.board.stepCount = state.stepCount
     this.board.boxPushes = state.boxPushes
 

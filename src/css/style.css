@@ -73,7 +73,7 @@ canvas {
   font-size: 20px;
 }
 
-#reset-level, #skip-level, .reset-game, #start-solver, #stop-solver {
+#reset-level, #skip-level, .reset-game, #previous-state, #next-state {
   cursor: pointer;
   box-sizing: border-box;
   margin: 10px 3px;

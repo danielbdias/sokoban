@@ -1,5 +1,4 @@
 import Sokoban from "./sokoban";
-import SokobanSimulator from "./sokoban/simulator"
 import SolverFactory from "./solver/factory"
 
 const keyCodeToDirection = { 37: "left", 38: "up", 39: "right", 40: "down" }
@@ -18,13 +17,7 @@ function refreshGameStats(stats) {
   $("#select-level").val(level)
 }
 
-function refreshSolverStats(stats) {
-  const { discoveredStates, stepsSimulated, goalFound } = stats
-
-  $("#solver-states-discovered").text(discoveredStates)
-  $("#solver-found-goal").text(goalFound)
-  $("#solver-steps-simulated").text(stepsSimulated)
-}
+function refreshSolverStats(stats) { }
 
 document.addEventListener("DOMContentLoaded", () => {
   $("#reset-level").click(() => sokoban.resetLevel())
@@ -35,19 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const levelAsText = $("#select-level").val()
     const level = parseInt(levelAsText)
     sokoban.startLevel(level)
-  })
-
-  $("#start-solver").click(() => {
-    const levelAsText = $("#select-level").val()
-    const level = parseInt(levelAsText)
-    const maxSteps = 100000
-    const solverType = $("#select-solver").val()
-    const solver = SolverFactory.create(solverType, new SokobanSimulator(sokoban, level), refreshSolverStats)
-
-    console.log(solver.solve(maxSteps))
-  })
-  $("#stop-solver").click(() => {
-    sokoban.restoreState({"stepCount":16,"boxPushes":3,"level":1,"board":[["#","#","#","#","#","#","#","#"],["#","#","#"," "," ","."," ","#"],["#","#"," ",".","$","#"," ","#"],["#","#"," ","*"," "," "," ","#"],["#","#"," "," ","#","@","#","#"],["#","#","#"," "," ","$","#","#"],["#","#","#","#","#","#","#","#"],["#","#","#","#","#","#","#","#"]]})
   })
 
   document.addEventListener("keydown", () => {

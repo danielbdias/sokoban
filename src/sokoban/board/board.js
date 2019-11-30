@@ -10,14 +10,18 @@ function findPlayer(grid) {
 }
 
 class Board {
-  constructor (textGrid) {
-    this.stage = new createjs.Stage('canvas')
+  constructor (textGrid, renderEnabled = true) {
+    this.renderEnabled = renderEnabled
+
     this.stepCount = 0
     this.boxPushes = 0
     this.objectGrid = GridSerializer.fromText(textGrid)
     this.playerObject = findPlayer(this.objectGrid)
-    this.renderEnabled = true
-    this.render()
+
+    if (this.renderEnabled) {
+      this.stage = new createjs.Stage('canvas')
+      this.render()
+    }
   }
 
   boardState () {
@@ -141,10 +145,16 @@ class Board {
   }
 
   movePlayer (direction) {
-    this.stage.removeAllChildren()
+    if (this.renderEnabled) {
+      this.stage.removeAllChildren()
+    }
+
     this.playerObject.switchImage(direction)
     this.handleMovement(direction)
-    this.render()
+
+    if (this.renderEnabled) {
+      this.render()
+    }
   }
 }
 

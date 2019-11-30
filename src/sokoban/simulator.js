@@ -39,6 +39,10 @@ class SokobanSimulator {
     this.sokoban.movePlayer(action)
     return new SimulatorState(this.sokoban.currentState())
   }
+
+  restoreState(state) {
+    this.sokoban.restoreState(state.content())
+  }
 }
 
 export default SokobanSimulator
